@@ -1,8 +1,9 @@
+import { YesNoButtonPropsTypes } from "@/types/yesNoButtonPropsTypes";
 import React from "react";
 
-export const YesButton = ({ setGejala }: { setGejala: () => void }) => {
+export const YesButton = (props: YesNoButtonPropsTypes) => {
   return (
-    <button onClick={setGejala} className="rounded-xl text-sm w-32 py-2 bg-green-600 text-white">
+    <button disabled={props.gejala === true} onClick={props.setGejala} className="rounded-xl disabled:pointer-events-none disabled:opacity-60 text-sm w-32 py-2 bg-green-600 text-white hover:scale-105 duration-150 shadow-lg shadow-black/60">
       Ya
     </button>
   );

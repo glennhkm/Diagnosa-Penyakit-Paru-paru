@@ -1,4 +1,6 @@
+import { DefaultGejalaTypes } from "./defaultGejalaTypes";
+
 export interface GejalaDanPertanyaan {
-    gejala: string,
+    gejala: keyof DefaultGejalaTypes,
     pertanyaan: string,
 }

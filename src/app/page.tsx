@@ -134,9 +134,12 @@ const Main = () => {
         </Marquee>
       </div>
       <div className="w-full py-12 px-16 h-full z-20 ">        
-          <h1 className="font-bold text-6xl text-center text-white mb-11 mt-8">
-            Sistem Pakar Diagnosis Penyakit Paru-Paru
+          <h1 className="font-bold text-8xl text-center text-white mt-8">
+            PulmoHealth
           </h1>
+          <p className="text-sm text-center text-white mb-11 mt-2.5">
+            Sistem pakar diagnosa penyakit paru-paru berbasis web 
+          </p>
           <div className="grid grid-cols-2 gap-4 w-full">
             {informasiGejala.map((infoGejala, index) => (
               <QuestionWrapper

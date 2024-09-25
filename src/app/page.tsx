@@ -100,7 +100,7 @@ const Main = () => {
 
   return (
     <div>
-      <BackgroundBeams />
+      {/* <BackgroundBeams /> */}
       {showDiagnosa && (
         <DiagnosaModal diagnosa={diagnosa} diagnosaInfo={diagnosaInfo} setShowDiagnosa={setShowDiagnosa}/>
       )}

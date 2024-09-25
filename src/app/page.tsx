@@ -1,8 +1,7 @@
 "use client";
 
 import { QuestionWrapper } from "@/components/questionWrapper/questionWrapper";
-import { BackgroundBeams } from "@/components/ui/background-beams";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { defaultGejala } from "@/data/defaultGejala";
 import { informasiGejala } from "@/data/informasiGejala";
 import toast from "react-hot-toast";

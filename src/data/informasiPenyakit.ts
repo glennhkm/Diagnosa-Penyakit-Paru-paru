@@ -2,23 +2,28 @@ import { PenyakitDanSolusi } from "@/types/penyakitDanSolusi";
 
 export const informasiPenyakit: PenyakitDanSolusi[] = [
     {
-        penyakit: 'Tuberkolosis (TBC)',
+        id: 1,
+        namaPenyakit: 'Tuberkolosis (TBC)',
         solusi: 'Minum obat TBC yang diberikan dokter',
     },
     {
-        penyakit: 'Paru Obstruktif Kronik (PPOK)',
+        id: 2,
+        namaPenyakit: 'Paru Obstruktif Kronik (PPOK)',
         solusi: 'Minum obat asma yang diberikan dokter',
     },
     {
-        penyakit: 'Asma Bronkial',
+        id: 3,
+        namaPenyakit: 'Asma Bronkial',
         solusi: 'Minum obat'
     },
     {
-        penyakit: 'Kanker Paru-Paru',
+        id: 4,
+        namaPenyakit: 'Kanker Paru-Paru',
         solusi: 'Minum obat'
     },
     {
-        penyakit: 'Pneumonia',
+        id: 5,
+        namaPenyakit: 'Pneumonia',
         solusi: 'Minum obat'
     }   
 ]

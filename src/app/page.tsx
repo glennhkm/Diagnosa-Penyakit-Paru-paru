@@ -5,14 +5,23 @@ import { BackgroundBeams } from "@/components/ui/background-beams";
 import { useEffect, useState } from "react";
 import { defaultGejala } from "@/data/defaultGejala";
 import { informasiGejala } from "@/data/informasiGejala";
-import { informasiPenyakit } from "@/data/informasiPenyakit";
 import toast from "react-hot-toast";
 import Marquee from "react-fast-marquee";
 import { ArrowIcon } from "@/components/icons/arrowIcon";
+import { IsAsmaBronkial } from "@/utils/rules/isAsmaBronkial";
+import { IsPneumonia } from "@/utils/rules/isPneumonia";
+import { IsKankerParu } from "@/utils/rules/isKankerParu";
+import { IsPPOK } from "@/utils/rules/isPPOK";
+import { IsTBC } from "@/utils/rules/isTBC";
+import { informasiPenyakit } from "@/data/informasiPenyakit";
+import { PenyakitDanSolusi } from "@/types/penyakitDanSolusi";
+import { DiagnosaModal } from "@/components/modals/diagnosaModal";
 
 const Main = () => {
   const [gejalaUser, setGejalaUser] = useState(defaultGejala);
-  const [diagnosa, setDiagnosa] = useState([]);
+  const [diagnosa, setDiagnosa] = useState<PenyakitDanSolusi[]>([]);
+  const [diagnosaInfo, setDiagnosaInfo] = useState('');
+  const [showDiagnosa, setShowDiagnosa] = useState(false);
   const [visible, setVisible] = useState(true);
 
   useEffect(() => {    
@@ -44,18 +53,66 @@ const Main = () => {
     }));
   }
 
-  const diagnosaCheck = () => {
-    console.log(gejalaUser);
+  const diagnosaCheck = () => {    
     const hasNullValue = Object.values(gejalaUser).some(value => value === null);
     if (hasNullValue) {
       toast.error("Anda belum menjawab semua pertanyaan.")
       return;
     }
+
+    const penyakitUser = [
+      {
+        id: 1,
+        namaPenyakit: "Tuberkulosis(TBC)",
+        diagnosa: IsTBC(gejalaUser),
+        solusi: informasiPenyakit[0].solusi,
+      },      
+      {
+        id: 2,
+        namaPenyakit: "Penyakit Paru Obstruktif Kronik",
+        diagnosa: IsPPOK(gejalaUser),
+        solusi: informasiPenyakit[1].solusi,
+      },
+      {
+        id: 3,
+        namaPenyakit: "Asma Bronkial",
+        diagnosa: IsAsmaBronkial(gejalaUser),
+        solusi: informasiPenyakit[2].solusi,
+      },
+      {
+        id: 4,
+        namaPenyakit: "Kanker Paru",
+        diagnosa: IsKankerParu(gejalaUser),
+        solusi: informasiPenyakit[3].solusi,
+      },
+      {
+        id: 5,
+        namaPenyakit: "Pneumonia",
+        diagnosa: IsPneumonia(gejalaUser),
+        solusi: informasiPenyakit[4].solusi,
+      },
+    ];
+
+    const diagnosedPenyakit = penyakitUser.filter((penyakit) => penyakit.diagnosa === true).map(({ diagnosa, ...rest }) => rest);
+    // console.log(diagnosedPenyakit);  
+    // console.log(gejalaUser);
+    setDiagnosa(diagnosedPenyakit);
+    setShowDiagnosa(true);
+    
+    if (diagnosedPenyakit.length === 0) {
+      setDiagnosaInfo("Anda tidak mengalami penyakit paru-paru yang serius. Namun, jika gejala yang Anda alami tidak kunjung membaik, sebaiknya segera berkonsultasi dengan dokter.");
+    } else {
+      setDiagnosaInfo("Anda mungkin mengalami penyakit paru-paru berikut:");
+    }
+
   }
 
   return (
     <div>
       <BackgroundBeams />
+      {showDiagnosa && (
+        <DiagnosaModal diagnosa={diagnosa} diagnosaInfo={diagnosaInfo} setShowDiagnosa={setShowDiagnosa}/>
+      )}
       {visible && (
         <div
           className="bg-[#151515] w-screen h-screen z-50 fixed top-0 left-0 text-white flex justify-center items-center"
@@ -67,7 +124,7 @@ const Main = () => {
           <p className="text-[10rem] font-bold">KELOMPOK 6</p>        
         </div>
       )}
-      <div className="fixed top-0 left-0 w-screen z-20">
+      <div className="fixed top-0 left-0 w-screen z-50">
         <Marquee
           direction="left"
           className="bg-white text-black text-xs p-2"

@@ -1,7 +1,7 @@
 import { DefaultGejalaTypes } from "@/types/defaultGejalaTypes";
 
 export const IsKankerParu = (gejala: DefaultGejalaTypes) => {
-  if (
+  return (
     gejala.batukLebih3Minggu &&
     gejala.batukDarah &&
     gejala.sesakNapas &&
@@ -14,9 +14,5 @@ export const IsKankerParu = (gejala: DefaultGejalaTypes) => {
     gejala.nyeriBahu &&
     gejala.leherBengkak &&
     gejala.wajahBengkak
-  ) {
-    return true;
-  } else {
-    return false;
-  }
+  )
 };

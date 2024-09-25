@@ -1,7 +1,7 @@
 import { DefaultGejalaTypes } from "@/types/defaultGejalaTypes";
 
 export const IsTBC = (gejala: DefaultGejalaTypes) => {
-  if (
+  return (
     gejala.batukLebih3Minggu &&
     gejala.batukBerdahakMukoid &&
     gejala.batukDarah &&
@@ -10,10 +10,6 @@ export const IsTBC = (gejala: DefaultGejalaTypes) => {
     gejala.keringatMalam &&
     gejala.malaise &&
     gejala.nafsuMakanBerkurang &&
-    gejala.beratBadanMenurun  
-  ) {
-    return true;
-  } else {
-    return false;
-  }
+    gejala.beratBadanMenurun 
+  )
 };

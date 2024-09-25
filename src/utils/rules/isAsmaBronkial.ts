@@ -1,7 +1,7 @@
 import { DefaultGejalaTypes } from "@/types/defaultGejalaTypes";
 
 export const IsAsmaBronkial = (gejala: DefaultGejalaTypes) => {
-  if (
+  return (
     gejala.batukLebih3Minggu &&
     gejala.sesakNapas &&
     gejala.mengi &&
@@ -10,9 +10,5 @@ export const IsAsmaBronkial = (gejala: DefaultGejalaTypes) => {
     gejala.asmaNokturnal &&
     gejala.batukMemberatMalamHari &&
     gejala.riwayatKeluargaAsma
-  ) {
-    return true;
-  } else {
-    return false;
-  }
+  );
 };

@@ -1,4 +1,5 @@
 export interface PenyakitDanSolusi {
-    penyakit: string,
+    id: number,
+    namaPenyakit: string,
     solusi: string,
 } 

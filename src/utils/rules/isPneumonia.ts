@@ -1,7 +1,7 @@
 import { DefaultGejalaTypes } from "@/types/defaultGejalaTypes";
 
 export const IsPneumonia = (gejala: DefaultGejalaTypes) => {
-  if (
+  return (
     gejala.batukLebih3Minggu &&
     gejala.batukBerdahakPurulen &&
     gejala.batukDarah &&
@@ -9,9 +9,5 @@ export const IsPneumonia = (gejala: DefaultGejalaTypes) => {
     gejala.demam &&
     gejala.menggigil &&
     gejala.nyeriDada
-  ) {
-    return true;
-  } else {
-    return false;
-  }
+  )
 };

@@ -22,15 +22,6 @@ const Main = () => {
   const [diagnosa, setDiagnosa] = useState<PenyakitDanSolusi[]>([]);
   const [diagnosaInfo, setDiagnosaInfo] = useState('');
   const [showDiagnosa, setShowDiagnosa] = useState(false);
-  const [visible, setVisible] = useState(true);
-
-  useEffect(() => {    
-    const timer = setTimeout(() => {
-      setVisible(false);
-    }, 3000);
-
-    return () => clearTimeout(timer);
-  }, []);
 
   const handleYesButton = (gejala: string) => {
     setGejalaUser((prevGejalaUser) => ({
@@ -113,25 +104,23 @@ const Main = () => {
       {showDiagnosa && (
         <DiagnosaModal diagnosa={diagnosa} diagnosaInfo={diagnosaInfo} setShowDiagnosa={setShowDiagnosa}/>
       )}
-      {visible && (
-        <div
-          className="bg-[#151515] w-screen h-screen z-50 fixed top-0 left-0 text-white flex justify-center items-center"
-          style={{
-            animation: 'slideUp 1s forwards',
-            animationDelay: '2s'  
-          }}
-        >
-          <p className="text-[10rem] font-bold">KELOMPOK 6</p>        
+      <div
+        className="bg-[#151515] w-screen h-screen z-50 top-0 left-0 text-white flex justify-center items-center fixed"
+        style={{
+          animation: 'slideUp 1s forwards',
+          animationDelay: '2s'  
+        }}
+      >
+        <p className="text-[10rem] font-bold">KELOMPOK 6</p>
+        <div className="absolute bottom-0 left-0 w-screen z-50">
+          <Marquee
+            direction="left"
+            className="bg-white text-black text-xs p-2"
+          >
+            <p>Program ini hanya berfungsi sebagai alat bantu diagnosa dan telah dihitung memiliki akurasi sebesar 80%. Penting untuk dipahami bahwa hasil yang diberikan bukanlah jaminan kebenaran 100%, dan masih ada kemungkinan adanya kondisi medis lain yang tidak terdeteksi oleh program ini. Oleh karena itu, disarankan untuk tetap berkonsultasi dengan tenaga medis profesional guna mendapatkan diagnosis yang lebih akurat dan menyeluruh.</p>
+            <p className="w-[50vw] h-full"></p>
+          </Marquee>
         </div>
-      )}
-      <div className="fixed top-0 left-0 w-screen z-50">
-        <Marquee
-          direction="left"
-          className="bg-white text-black text-xs p-2"
-        >
-          <p>Program ini hanya berfungsi sebagai alat bantu diagnosa dan telah dihitung memiliki akurasi sebesar 80%. Penting untuk dipahami bahwa hasil yang diberikan bukanlah jaminan kebenaran 100%, dan masih ada kemungkinan adanya kondisi medis lain yang tidak terdeteksi oleh program ini. Oleh karena itu, disarankan untuk tetap berkonsultasi dengan tenaga medis profesional guna mendapatkan diagnosis yang lebih akurat dan menyeluruh.</p>
-          <p className="w-[50vw] h-full"></p>
-        </Marquee>
       </div>
       <div className="w-full py-12 px-16 h-full z-20 ">        
           <h1 className="font-bold text-8xl text-center text-white mt-8">

@@ -124,7 +124,7 @@ const Main = () => {
   useEffect(() => {
     setTimeout(() => {
       setIsIntro(false);
-    }, 4200);
+    }, 5100);
     setTimeout(() => {
       setIsSpotlight(true);
     }, 2400);
@@ -369,7 +369,7 @@ const Main = () => {
       <div id="marquee" className="fixed bottom-0 left-0 z-40">
         <Marquee
           direction="left"
-          className="bg-white/80 text-black text-xs p-2"
+          className="bg-white text-black text-xs p-2"
         >
           <p>
             Program ini hanya berfungsi sebagai alat bantu diagnosa dan telah

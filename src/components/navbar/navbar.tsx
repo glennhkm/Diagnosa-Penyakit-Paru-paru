@@ -36,7 +36,7 @@ export const Navbar: React.FC = () => {
     >
       <div className="flex items-center cursor-pointer hover:scale-105 duration-150" onClick={() => ScrollToSection("hero")}>
         <div className="w-10 h-10 relative">
-          <Image src="/assets/images/logo.png" alt="logo" fill />
+          <Image src="/assets/images/logo.png" alt="logo" fill sizes="4vw"/>
         </div>
         <p className="font-bold">PulmoHealth</p>
       </div>

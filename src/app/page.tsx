@@ -28,6 +28,10 @@ import { AnimatedTooltip } from "@/components/aceternity/animated-tooltip";
 import { anggotaKelompok } from "@/data/anggotaKelompok";
 import Lottie from "lottie-react";
 import { BackgroundBeams } from "@/components/aceternity/bg-beams";
+import { TextGenerateEffect } from "@/components/aceternity/text-generate";
+import CountUp from "react-countup";
+import { Meteors } from "@/components/aceternity/meteor";
+import Link from "next/link";
 
 const Main = () => {
   const [gejalaUser, setGejalaUser] = useState(defaultGejala);
@@ -120,10 +124,10 @@ const Main = () => {
   useEffect(() => {
     setTimeout(() => {
       setIsIntro(false);
-    }, 3200);
+    }, 4200);
     setTimeout(() => {
       setIsSpotlight(true);
-    }, 1800);
+    }, 2400);
   });
 
   return (
@@ -140,11 +144,31 @@ const Main = () => {
           className="bg-[#151515] w-screen h-screen z-50 top-0 left-0 text-white flex flex-col justify-center items-center fixed"
           style={{
             animation: "slideDown 1s forwards",
-            animationDelay: "3s",
+            animationDelay: "4s",
           }}
         >
-          <p className="text-[10rem] font-bold">Kelompok 6</p>
-          <p>Rule-based AI mengenai penyakit paru-paru</p>
+          <TextGenerateEffect
+            className="text-[10rem] text-white font-extrabold"
+            words="Kelompok 6"
+          />
+          <div className="flex gap-2 items-center -mt-5">
+            <Image
+              src="/assets/images/logo.png"
+              alt="logo"
+              width={120}
+              height={120}
+            />
+            <div className="flex flex-col gap-1 pb-3">
+              <TextGenerateEffect
+                className="font-bold text-6xl"
+                words="PulmoHealth"
+              />
+              <TextGenerateEffect
+                className="-mt-4 text-sm pl-1"
+                words="Kecerdasan Artifisial berbasis aturan mengenai diagnosa penyakit paru-paru"
+              />
+            </div>
+          </div>
           <div className="absolute top-0 left-0 w-screen z-50">
             <Marquee
               direction="left"
@@ -162,7 +186,7 @@ const Main = () => {
               <p className="w-[50vw] h-full"></p>
             </Marquee>
           </div>
-          <BackgroundBeams/>
+          <BackgroundBeams />
         </div>
       )}
       <div id="navbar">
@@ -208,7 +232,6 @@ const Main = () => {
             <Image
               src="/assets/images/person-lungs.webp"
               alt="Lungs"
-              layout="responsive"
               width={500}
               height={500}
               className="object-cover rounded-xl w-full h-full"
@@ -221,47 +244,68 @@ const Main = () => {
         className="h-screen px-16 w-full bg-[#151515] bg-dot-white/[0.2]  relative flex items-center justify-center"
       >
         <div className="absolute pointer-events-none inset-0 flex items-center justify-center bg-black [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>
-        <div className="grid grid-cols-2 w-1/2 gap-3">
-          <BackgroundGradient className="rounded-xl w-full flex flex-col justify-between p-5 bg-zinc-900 relative h-[30vh] cursor-pointer group">
-            <Image
-              src="/assets/images/document-2.jpg"
-              alt="document"
-              width={500}
-              height={500}
-              className="object-cover w-full h-3/4 rounded-xl"
-            />
-            <div className="flex justify-between w-full text-white items-center">
-              <div className="flex flex-col">
-                <p className="font-bold">Sumber Jurnal</p>
-                <p className="text-xs">Jurnal berasal dari UNNES </p>
-              </div>
-              <button className="bg-white/10 w-8 h-8 rounded-full flex justify-center items-center">
-                <ArrowRightIcon className="w-4 h-4" />
-              </button>
-            </div>
-          </BackgroundGradient>
-          <BackgroundGradient className="rounded-xl p-5 w-full bg-zinc-900 relative h-[30vh] text-white cursor-pointer group flex flex-col">
-            <h6 className="font-bold text-lg">
-              27 Fakta dengan 5 Diagnosa Penyakit
-            </h6>
-            <div className="h-[1px] w-5/6 bg-gradient-to-r from-transparent via-sky-500 to-transparent my-2"></div>
-            <p className="mt-1">Tubercolosis (TBC)</p>
-            <p className="">Penyakit Paru Obstruktif (PPOK)</p>
-            <p className="">Asma Bronkial</p>
-            <p className="">Kanker Paru</p>
-            <p className="">Pneumonia</p>
-            <div className="absolute right-6 bottom-0">
-              <Lottie
-                animationData={Doctor}
-                style={{
-                  width: "110px",
-                  height: "110px",
-                }}
+        <div className="grid grid-cols-3 w-1/2 gap-3">
+          <Link
+            href={"https://journal.unnes.ac.id/nju/jte/article/view/7436/5765"}
+            className="hover:scale-[1.02] duration-200"
+            target="_blank"            
+          >
+            <BackgroundGradient className="rounded-xl w-full flex flex-col justify-between p-4 bg-zinc-900 relative h-[30vh]  group">
+              <Image
+                src="/assets/images/document-2.jpg"
+                alt="document"
+                width={500}
+                height={500}
+                className="object-cover w-full h-3/4 rounded-xl"
               />
-            </div>
-          </BackgroundGradient>
-          <div className="w-full col-span-2">
-            <BackgroundGradient className="rounded-xl w-full p-5 text-white bg-zinc-900 flex flex-col">
+              <div className="flex justify-between w-full text-white items-center">
+                <div className="flex flex-col">
+                  <p className="font-bold">Sumber Jurnal</p>
+                  <p className="text-[0.68rem]">Jurnal Teknik Elektro UNNES</p>
+                </div>
+                <ArrowRightIcon className="w-6 h-6" />
+              </div>
+            </BackgroundGradient>
+          </Link>
+          <div className="hover:scale-[1.02] duration-200">
+            <BackgroundGradient className="rounded-xl p-4 w-full bg-zinc-900 relative h-[30vh] text-white group flex flex-col items-center justify-center">
+              <CountUp
+                end={84}
+                suffix="%"
+                enableScrollSpy
+                duration={3}
+                className="text-[4.6rem] font-bold"
+              />
+              <p className="font-semibold text-[1.16rem] text-center border-t-[0.4px] border-white/40 pt-5">
+                Nilai Probabilitas Keakuratan Sistem
+              </p>
+              <Meteors number={20} />
+            </BackgroundGradient>
+          </div>
+          <div className="hover:scale-[1.02] duration-200">
+            <BackgroundGradient className="rounded-xl p-4 w-full bg-zinc-900 relative h-[30vh] text-white group flex flex-col">
+              <h6 className="font-bold text-lg">
+                27 Fakta dengan 5 Diagnosa Penyakit
+              </h6>
+              <div className="h-[1px] w-5/6 bg-gradient-to-r from-transparent via-sky-500 to-transparent my-2"></div>
+              <p className="text-sm mt-1">1. Tubercolosis (TBC)</p>
+              <p className="text-sm ">2. Penyakit Paru Obstruktif (PPOK)</p>
+              <p className="text-sm ">3. Asma Bronkial</p>
+              <p className="text-sm ">4. Kanker Paru</p>
+              <p className="text-sm ">5. Pneumonia</p>
+              <div className="absolute right-1.5 -bottom-4">
+                <Lottie
+                  animationData={Doctor}
+                  style={{
+                    width: "100px",
+                    height: "100px",
+                  }}
+                />
+              </div>
+            </BackgroundGradient>
+          </div>
+          <div className="w-full col-span-3 hover:scale-[1.02] duration-200">
+            <BackgroundGradient className="rounded-xl w-full p-4 text-white bg-zinc-900 flex flex-col">
               <p className="font-bold">Catatan penting</p>
               <p className="text-sm">
                 Program ini merupakan alat bantu diagnosa dengan akurasi 80%.
@@ -272,8 +316,8 @@ const Main = () => {
             </BackgroundGradient>
           </div>
         </div>
-        <div className="flex flex-col gap-3 px-16 text-white/80 w-1/2 relative">
-          <div className="absolute -top-8 right-36 w-40 h-3w-40">
+        <div className="flex flex-col gap-5 px-16 text-white/80 w-1/2 relative">
+          <div className="absolute -top-6 right-36 w-40 h-3w-40">
             <Lottie animationData={Lungs_2} />
           </div>
           <div className="flex">

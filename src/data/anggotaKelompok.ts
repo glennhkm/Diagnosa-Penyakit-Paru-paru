@@ -29,7 +29,7 @@ export const anggotaKelompok = [
     },
     {
       id: 5,
-      name: "Indriani Miza ALfianti",
+      name: "Indriani Miza Alfianti",
       designation: "2208107010026",
       image:
         "/assets/images/indri.png"

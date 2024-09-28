@@ -127,7 +127,7 @@ const Main = () => {
     }, 5100);
     setTimeout(() => {
       setIsSpotlight(true);
-    }, 2800);
+    }, 3000);
   });
 
   return (

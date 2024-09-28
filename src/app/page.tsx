@@ -325,7 +325,7 @@ const Main = () => {
           </div>
           <h2 className="text-7xl font-bold">Tentang PulmoHealth</h2>
           <p>
-            Tentang PulmoHealth Kami adalah platform berbasis AI yang membantu
+            Kami adalah platform berbasis AI yang membantu
             mendiagnosa penyakit paru-paru seperti TBC, PPOK, Asma, Kanker
             Paru-paru, dan Pneumonia. Melalui analisis jawaban dari serangkaian
             pertanyaan, PulmoHealth menyediakan evaluasi kesehatan paru-paru

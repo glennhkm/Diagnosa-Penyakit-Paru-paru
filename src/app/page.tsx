@@ -17,9 +17,9 @@ import { PenyakitDanSolusi } from "@/types/penyakitDanSolusi";
 import { DiagnosaModal } from "@/components/modals/diagnosaModal";
 import { Spotlight } from "@/components/aceternity/spotlight";
 import Image from "next/image";
-// import Lottie from "lottie-react";
-import Lungs from "@/../public/assets/lottie/lungs.json";
-import { ArrowDownIcon } from "@radix-ui/react-icons";
+import Lungs_2 from "@/../public/assets/lottie/lungs-2.json";
+import Doctor from "@/../public/assets/lottie/doctor.json";
+import { ArrowDownIcon, ArrowRightIcon } from "@radix-ui/react-icons";
 import { SparklesCore } from "@/components/aceternity/sparkles";
 import { Navbar } from "@/components/navbar/navbar";
 import { ScrollToSection } from "@/utils/helpers/scrollToSection";
@@ -27,6 +27,7 @@ import { BackgroundGradient } from "@/components/aceternity/bg-gradient";
 import { AnimatedTooltip } from "@/components/aceternity/animated-tooltip";
 import { anggotaKelompok } from "@/data/anggotaKelompok";
 import Lottie from "lottie-react";
+import { BackgroundBeams } from "@/components/aceternity/bg-beams";
 
 const Main = () => {
   const [gejalaUser, setGejalaUser] = useState(defaultGejala);
@@ -136,13 +137,14 @@ const Main = () => {
       )}
       {isIntro && (
         <div
-          className="bg-[#151515] w-screen h-screen z-50 top-0 left-0 text-white flex justify-center items-center fixed"
+          className="bg-[#151515] w-screen h-screen z-50 top-0 left-0 text-white flex flex-col justify-center items-center fixed"
           style={{
             animation: "slideDown 1s forwards",
             animationDelay: "3s",
           }}
         >
-          <p className="text-[10rem] font-bold">KELOMPOK 6</p>
+          <p className="text-[10rem] font-bold">Kelompok 6</p>
+          <p>Rule-based AI mengenai penyakit paru-paru</p>
           <div className="absolute top-0 left-0 w-screen z-50">
             <Marquee
               direction="left"
@@ -160,6 +162,7 @@ const Main = () => {
               <p className="w-[50vw] h-full"></p>
             </Marquee>
           </div>
+          <BackgroundBeams/>
         </div>
       )}
       <div id="navbar">
@@ -197,7 +200,7 @@ const Main = () => {
               onClick={() => ScrollToSection("diagnosa")}
               className="w-48 py-2.5 rounded-xl border-[0.1px] border-black/20  shadow-balance shadow-sky-500 hover:shadow-slate-200 hover:scale-105 duration-150 mt-2 text-sm flex gap-2 items-center justify-center"
             >
-              <p>Mulai Sekarang</p>
+              <p className="font-bold">Mulai Sekarang</p>
               <ArrowDownIcon />
             </button>
           </div>
@@ -213,56 +216,77 @@ const Main = () => {
           </div>
         </div>
       </div>
-      <div id="tentang" className="w-full h-screen flex items-center relative px-16">
-        <div className="absolute pointer-events-none inset-0 flex items-center justify-center bg-black/60 [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>
-        <div className="grid grid-cols-3 w-1/2 gap-2">          
-          <BackgroundGradient className="rounded-xl w-full p-4 sm:p-10 bg-zinc-900 relative h-[30vh] cursor-pointer group">
-            <div className="w-full h-full bg-black/60 absolute inset-0 z-30 flex justify-center items-center rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-150">
-              <p className="font-bold text-white text-xl">Jurnal Sumber</p>
-            </div>
+      <div
+        id="tentang"
+        className="h-screen px-16 w-full bg-[#151515] bg-dot-white/[0.2]  relative flex items-center justify-center"
+      >
+        <div className="absolute pointer-events-none inset-0 flex items-center justify-center bg-black [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>
+        <div className="grid grid-cols-2 w-1/2 gap-3">
+          <BackgroundGradient className="rounded-xl w-full flex flex-col justify-between p-5 bg-zinc-900 relative h-[30vh] cursor-pointer group">
             <Image
-              src="/assets/images/document.jpg"
+              src="/assets/images/document-2.jpg"
               alt="document"
-              layout="fill"
-              className="object-cover w-full h-full rounded-xl"
+              width={500}
+              height={500}
+              className="object-cover w-full h-3/4 rounded-xl"
             />
-          </BackgroundGradient>          
-          <BackgroundGradient className="rounded-xl w-full justify-center items-center p-4 sm:p-10 bg-zinc-900 relative h-[30vh] cursor-pointer group">
-            <div className="w-full h-full bg-black/60 absolute inset-0 z-30 flex justify-center items-center rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-150">
-              <p className="font-bold text-white text-xl">Jurnal Sumber</p>
+            <div className="flex justify-between w-full text-white items-center">
+              <div className="flex flex-col">
+                <p className="font-bold">Sumber Jurnal</p>
+                <p className="text-xs">Jurnal berasal dari UNNES </p>
+              </div>
+              <button className="bg-white/10 w-8 h-8 rounded-full flex justify-center items-center">
+                <ArrowRightIcon className="w-4 h-4" />
+              </button>
             </div>
-            <Lottie animationData={Lungs} style={{
-              width: "120%",
-              height: "120%",
-            }}/>
-          </BackgroundGradient>          
-          <BackgroundGradient className="rounded-xl w-full p-4 sm:p-10 bg-zinc-900 relative h-[30vh] cursor-pointer group">
-            <div className="w-full h-full bg-black/60 absolute inset-0 z-30 flex justify-center items-center rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-150">
-              <p className="font-bold text-white text-xl">Jurnal Sumber</p>
-            </div>
-            <Image
-              src="/assets/images/document.jpg"
-              alt="document"
-              layout="fill"
-              className="object-cover w-full h-full rounded-xl"
-            />
-          </BackgroundGradient>          
-          <div className="w-full col-span-3">
-          <BackgroundGradient className="rounded-[22px] w-full p-4 sm:p-10 bg-zinc-900 col-span-3 ">
-            asndnjdn andnja nijdnq
           </BackgroundGradient>
+          <BackgroundGradient className="rounded-xl p-5 w-full bg-zinc-900 relative h-[30vh] text-white cursor-pointer group flex flex-col">
+            <h6 className="font-bold text-lg">
+              27 Fakta dengan 5 Diagnosa Penyakit
+            </h6>
+            <div className="h-[1px] w-5/6 bg-gradient-to-r from-transparent via-sky-500 to-transparent my-2"></div>
+            <p className="mt-1">Tubercolosis (TBC)</p>
+            <p className="">Penyakit Paru Obstruktif (PPOK)</p>
+            <p className="">Asma Bronkial</p>
+            <p className="">Kanker Paru</p>
+            <p className="">Pneumonia</p>
+            <div className="absolute right-6 bottom-0">
+              <Lottie
+                animationData={Doctor}
+                style={{
+                  width: "110px",
+                  height: "110px",
+                }}
+              />
+            </div>
+          </BackgroundGradient>
+          <div className="w-full col-span-2">
+            <BackgroundGradient className="rounded-xl w-full p-5 text-white bg-zinc-900 flex flex-col">
+              <p className="font-bold">Catatan penting</p>
+              <p className="text-sm">
+                Program ini merupakan alat bantu diagnosa dengan akurasi 80%.
+                Hasilnya tidak menjamin kebenaran 100% dan mungkin ada kondisi
+                medis lain yang tidak terdeteksi. Konsultasi dengan tenaga medis
+                profesional tetap dianjurkan untuk diagnosis yang lebih akurat.
+              </p>
+            </BackgroundGradient>
           </div>
         </div>
         <div className="flex flex-col gap-3 px-16 text-white/80 w-1/2 relative">
-          <div className="absolute top-0 right-10 flex">
-          <AnimatedTooltip items={anggotaKelompok} />
+          <div className="absolute -top-8 right-36 w-40 h-3w-40">
+            <Lottie animationData={Lungs_2} />
+          </div>
+          <div className="flex">
+            <AnimatedTooltip items={anggotaKelompok} />
           </div>
           <h2 className="text-7xl font-bold">Tentang PulmoHealth</h2>
           <p>
-            Sistem AI berbasis aturan yang membantu mendiagnosa penyakit
-            paru-paru Anda melalui analisis jawaban dari serangkaian pertanyaan
-            yang disesuaikan. Dapatkan evaluasi kesehatan paru-paru yang lebih
-            cepat dan akurat dengan PulmoHealth.
+            Tentang PulmoHealth Kami adalah platform berbasis AI yang membantu
+            mendiagnosa penyakit paru-paru seperti TBC, PPOK, Asma, Kanker
+            Paru-paru, dan Pneumonia. Melalui analisis jawaban dari serangkaian
+            pertanyaan, PulmoHealth menyediakan evaluasi kesehatan paru-paru
+            secara cepat, akurat, dan mudah diakses, mendukung Anda dalam
+            menjaga kesehatan paru-paru dengan wawasan terpercaya.
           </p>
         </div>
       </div>
@@ -299,7 +323,10 @@ const Main = () => {
         </div>
       </div>
       <div id="marquee" className="fixed bottom-0 left-0 z-40">
-        <Marquee direction="left" className="bg-white text-black text-xs p-2">
+        <Marquee
+          direction="left"
+          className="bg-white/80 text-black text-xs p-2"
+        >
           <p>
             Program ini hanya berfungsi sebagai alat bantu diagnosa dan telah
             dihitung memiliki akurasi sebesar 80%. Penting untuk dipahami bahwa

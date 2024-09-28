@@ -2,43 +2,43 @@ export const anggotaKelompok = [
     {
       id: 1,
       name: "Glenn Hakim",
-      designation: "Software Engineer",
+      designation: "2208107010072",
       image:
-        "https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3387&q=80",
+        "/assets/images/glenn.jpeg",
     },
     {
       id: 2,
       name: "Farhanul Khair",
-      designation: "Product Manager",
+      designation: "2208107010076",
       image:
-        "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXZhdGFyfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
+        "/assets/images/anyul.jpeg",
     },
     {
       id: 3,
       name: "TM Fadlul Ihsan",
-      designation: "Data Scientist",
+      designation: "2208107010088",
       image:
-        "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8YXZhdGFyfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
+        "/assets/images/montu.png"
     },
     {
       id: 4,
       name: "T. Farhansyah",
-      designation: "UX Designer",
+      designation: "2208107010090",
       image:
-        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGF2YXRhcnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60",
+        "/assets/images/farhan.png"
     },
     {
       id: 5,
       name: "Indriani Miza ALfianti",
-      designation: "Soap Developer",
+      designation: "2208107010026",
       image:
-        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3540&q=80",
+        "/assets/images/indri.png"
     },
     {
       id: 6,
-      name: "Rizky Fadilah",
-      designation: "The Explorer",
+      name: "Irfan Rizadi",
+      designation: "2208107010062",
       image:
-        "https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3534&q=80",
+        "/assets/images/irfan.jpeg"
     },
   ];

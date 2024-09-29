@@ -26,11 +26,16 @@ const config: Config = {
       animation: {
         "spotlight": "spotlight 2s ease .75s 1 forwards",
         "meteor-effect": "meteor 5s linear infinite",
+        "blink": 'blink 1.4s infinite',
       },
       boxShadow: {
         'balance': '0 0 30px -6px',
       },
       keyframes: {
+        blink: {
+          '0%, 100%': { opacity: "0.8" },
+          '50%': { opacity: "0.3" },
+        },
         spotlight: {
           "0%": {
             opacity: "0",

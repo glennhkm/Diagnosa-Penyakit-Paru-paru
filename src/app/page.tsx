@@ -1,7 +1,7 @@
 "use client";
 
 import { QuestionWrapper } from "@/components/questionWrapper/questionWrapper";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { defaultGejala } from "@/data/defaultGejala";
 import { informasiGejala } from "@/data/informasiGejala";
 import toast from "react-hot-toast";
@@ -32,6 +32,16 @@ import { TextGenerateEffect } from "@/components/aceternity/text-generate";
 import CountUp from "react-countup";
 import { Meteors } from "@/components/aceternity/meteor";
 import Link from "next/link";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/shadcn/select";
+import { RefreshIcon } from "@/components/icons/refreshIcon";
 
 const Main = () => {
   const [gejalaUser, setGejalaUser] = useState(defaultGejala);
@@ -40,6 +50,14 @@ const Main = () => {
   const [showDiagnosa, setShowDiagnosa] = useState(false);
   const [isIntro, setIsIntro] = useState(true);
   const [isSpotlight, setIsSpotlight] = useState(false);
+  const [userData, setUserData] = useState({
+    nama: "",
+    usia: 0,
+    golonganDarah: "",
+  });
+  const [isDiagnosing, setIsDiagnosing] = useState(false);
+  const [isLoadTodiagnosing, setIsLoadTodiagnosing] = useState(false);
+  const diagnosaRef = useRef<HTMLDivElement | null>(null);
 
   const handleYesButton = (gejala: string) => {
     setGejalaUser((prevGejalaUser) => ({
@@ -74,13 +92,13 @@ const Main = () => {
     const penyakitUser = [
       {
         id: 1,
-        namaPenyakit: "Tuberkulosis(TBC)",
+        namaPenyakit: "Tuberculosis (TBC)",
         diagnosa: IsTBC(gejalaUser),
         solusi: informasiPenyakit[0].solusi,
       },
       {
         id: 2,
-        namaPenyakit: "Penyakit Paru Obstruktif Kronik",
+        namaPenyakit: "Penyakit Paru Obstruktif Kronik (PPOK)",
         diagnosa: IsPPOK(gejalaUser),
         solusi: informasiPenyakit[1].solusi,
       },
@@ -121,14 +139,52 @@ const Main = () => {
     }
   };
 
-  useEffect(() => {
+  const handleUserData = (key: string, value: string) => {    
+    setUserData((prevUserData) => ({
+      ...prevUserData,
+      [key]: value,
+    }));
+  };
+
+  const scrollToResults = () => {
+    if (diagnosaRef.current) {
+      diagnosaRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
+  const handleDiagnosing = () => {
+    console.log(userData);
+    setIsLoadTodiagnosing(true);
+    if (userData.nama === "" || userData.usia === 0 || userData.golonganDarah === "") {
+      toast.error("Silahkan isi semua data terlebih dahulu.");
+      setIsLoadTodiagnosing(false);
+      return;
+    }
     setTimeout(() => {
+      setIsDiagnosing(true);
+      setIsLoadTodiagnosing(false);
+    }, 2600);
+    
+  }
+
+  useEffect(() => {
+    const introTimer = setTimeout(() => {
       setIsIntro(false);
     }, 5100);
-    setTimeout(() => {
+    const spotlightTimer = setTimeout(() => {
       setIsSpotlight(true);
     }, 3000);
-  });
+    return () => {
+      clearTimeout(introTimer);
+      clearTimeout(spotlightTimer);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (isDiagnosing) {
+      scrollToResults();
+    }
+  }, [isDiagnosing]);
 
   return (
     <div className="flex flex-col w-full">
@@ -137,8 +193,10 @@ const Main = () => {
           diagnosa={diagnosa}
           diagnosaInfo={diagnosaInfo}
           setShowDiagnosa={setShowDiagnosa}
+          dataUser={userData}
         />
       )}
+      
       {isIntro && (
         <div
           className="bg-[#151515] w-screen h-screen z-50 top-0 left-0 text-white flex flex-col justify-center items-center fixed"
@@ -165,7 +223,8 @@ const Main = () => {
               />
               <TextGenerateEffect
                 className="-mt-4 text-sm pl-1"
-                words="Kecerdasan Artifisial berbasis aturan mengenai diagnosa penyakit paru-paru"
+                // words="Kecerdasan Artifisial berbasis aturan mengenai diagnosa penyakit paru-paru"
+                words="Deteksi Cepat, Tindakan Tepat: Jaga Kesehatan Paru-Paru Anda dari Sekarang"
               />
             </div>
           </div>
@@ -199,7 +258,7 @@ const Main = () => {
         <div className="absolute pointer-events-none inset-0 flex items-center justify-center bg-black [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>
         {isSpotlight && <Spotlight />}
         <div className="w-full h-full flex items-center justify-center">
-          <div className="w-1/2 flex flex-col gap-4 text-white/80 z-30 items-start">
+          <div className="w-1/2 flex flex-col gap-4 text-white/90 z-30 items-start">
             <h1 className="text-7xl font-bold">PulmoHealth</h1>
             <div className="w-full relative">
               <div className="absolute inset-x-0 top-0 bg-gradient-to-r from-indigo-500 via-transparent to-transparent h-[2px] w-full blur-sm" />
@@ -248,7 +307,7 @@ const Main = () => {
           <Link
             href={"https://journal.unnes.ac.id/nju/jte/article/view/7436/5765"}
             className="hover:scale-[1.02] duration-200"
-            target="_blank"            
+            target="_blank"
           >
             <BackgroundGradient className="rounded-xl w-full flex flex-col justify-between p-4 bg-zinc-900 relative h-[30vh]  group">
               <Image
@@ -288,7 +347,7 @@ const Main = () => {
                 27 Fakta dengan 5 Diagnosa Penyakit
               </h6>
               <div className="h-[1px] w-5/6 bg-gradient-to-r from-transparent via-sky-500 to-transparent my-2"></div>
-              <p className="text-sm mt-1">1. Tubercolosis (TBC)</p>
+              <p className="text-sm mt-1">1. Tuberculosis (TBC)</p>
               <p className="text-sm ">2. Penyakit Paru Obstruktif (PPOK)</p>
               <p className="text-sm ">3. Asma Bronkial</p>
               <p className="text-sm ">4. Kanker Paru</p>
@@ -316,7 +375,7 @@ const Main = () => {
             </BackgroundGradient>
           </div>
         </div>
-        <div className="flex flex-col gap-5 px-16 text-white/80 w-1/2 relative">
+        <div className="flex flex-col gap-5 px-16 text-white/90 w-1/2 relative">
           <div className="absolute -top-6 right-36 w-40 h-3w-40">
             <Lottie animationData={Lungs_2} />
           </div>
@@ -325,52 +384,121 @@ const Main = () => {
           </div>
           <h2 className="text-7xl font-bold">Tentang PulmoHealth</h2>
           <p>
-            Kami adalah platform berbasis AI yang membantu
-            mendiagnosa penyakit paru-paru seperti TBC, PPOK, Asma, Kanker
-            Paru-paru, dan Pneumonia. Melalui analisis jawaban dari serangkaian
-            pertanyaan, PulmoHealth menyediakan evaluasi kesehatan paru-paru
-            secara cepat, akurat, dan mudah diakses, mendukung Anda dalam
-            menjaga kesehatan paru-paru dengan wawasan terpercaya.
+            Kami adalah platform berbasis AI yang membantu mendiagnosa penyakit
+            paru-paru seperti TBC, PPOK, Asma, Kanker Paru-paru, dan Pneumonia.
+            Melalui analisis jawaban dari serangkaian pertanyaan, PulmoHealth
+            menyediakan evaluasi kesehatan paru-paru secara cepat, akurat, dan
+            mudah diakses, mendukung Anda dalam menjaga kesehatan paru-paru
+            dengan wawasan terpercaya.
           </p>
         </div>
       </div>
-      <div
-        id="diagnosa"
-        className="w-full py-12 px-16 h-full z-20 bg-gradient-to-b from-black/90 to-transparent via-transparent"
-      >
-        <h1 className="font-bold text-8xl text-center text-white mt-8">
-          PulmoHealth
-        </h1>
-        <p className="text-sm text-center text-white mb-11 mt-2.5">
-          Sistem pakar diagnosa penyakit paru-paru berbasis web
-        </p>
-        <div className="grid grid-cols-2 gap-4 w-full">
-          {informasiGejala.map((infoGejala, index) => (
-            <QuestionWrapper
-              key={index}
-              question={infoGejala.pertanyaan}
-              gejala={gejalaUser[infoGejala.gejala]}
-              setToYes={() => handleYesButton(infoGejala.gejala)}
-              setToNo={() => handleNoButton(infoGejala.gejala)}
-              setToNull={() => {
-                handleRefreshButton(infoGejala.gejala);
-              }}
-            />
-          ))}
-          <button
-            onClick={diagnosaCheck}
-            className="rounded-xl hover:bg-blue-900 duration-150 text-xl font-bold text-white bg-blue-600 col-span-2 py-4 flex gap-3 items-center justify-center mt-4 shadow-lg shadow-black/60"
-          >
-            <p>CEK DIAGNOSA</p>
-            <ArrowIcon className="size-12" />
-          </button>
+      <div id="diagnosa" className="w-full h-full py-12 px-16 flex flex-col gap-4 bg-black bg-grid-small-white/[0.2] relative">
+      <div className="absolute pointer-events-none inset-0 flex items-center justify-center bg-black/40 [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>                  
+        <h2 ref={diagnosaRef} className="font-bold text-8xl text-center text-white/90 mt-8 z-20 mb-8">
+          Cek Diagnosa
+        </h2>
+        {isDiagnosing && (
+        <button onClick={() => setIsDiagnosing(false)} className="bg-sky-500 rounded-xl z-20 py-3 px-4 font-bold text-white flex gap-2 justify-center hover:bg-opacity-80 duration-200">
+          <RefreshIcon className="w-6 h-6"/>
+          <p>Re-input Data</p>
+        </button>
+        )}
+        <div className="flex flex-col gap-4 w-full rounded-xl bg-[#151515]/80 z-20 p-6 text-white border border-white/20">
+          <div className="flex gap-4">
+            <div className="flex flex-col w-full gap-1">
+              <label htmlFor="nama" className="text-white pl-1 font-bold">Nama</label>
+              {!isDiagnosing ? (
+                <input
+                type="text"
+                id="nama"
+                name="nama"
+                className="w-full rounded-xl bg-transparent border border-white/40 py-3 px-4 placeholder:text-white/40 text-white focus:outline-none"
+                placeholder="Masukkan nama anda"
+                onChange={(e) => handleUserData('nama', e.target.value)}
+                />
+              ) : (
+                <p className="w-full rounded-xl bg-[#151515] border border-white/40 py-3 px-4 text-white">
+                  {userData.nama}
+                </p>
+              )}
+            </div>
+            <div className="flex flex-col w-full gap-1 relative">
+              <label htmlFor="usia" className="text-white pl-1 font-bold">Usia</label>
+              {!isDiagnosing ? (
+                <div className="relative w-full ">
+                  <input
+                  type="number"
+                  id="usia"
+                  name="usia"
+                  className="w-full rounded-xl bg-transparent border border-white/40 py-3 px-4 placeholder:text-white/40 text-white focus:outline-none"
+                  placeholder="Masukkan usia anda"
+                  onChange={(e) => handleUserData('usia', e.target.value)}
+                  />
+                  <p className="absolute right-12 text-white top-1/2 -translate-y-1/2 z-20">Tahun</p>                  
+                </div>              
+              ) : (
+                <p className="w-full rounded-xl bg-[#151515] border border-white/40 py-3 px-4 text-white">
+                  {userData.usia}
+                </p>
+              )}
+            </div>
+            <div className="flex flex-col w-full gap-1 relative">
+              <label  className="text-white pl-1 font-bold">Golongan Darah</label>
+              {!isDiagnosing ? (
+                <Select onValueChange={(value) => handleUserData('golonganDarah', value)}>            
+                  <SelectTrigger className={`bg-transparent border border-white/40 ${userData.golonganDarah ? 'text-white' : 'text-white/40'}`}>
+                    <SelectValue placeholder="Pilih golongan darah anda" />
+                  </SelectTrigger>
+                  <SelectContent className="text-white bg-[#151515] border border-white/40">
+                    <SelectGroup>
+                      <SelectLabel className="text-white text-base">Golongan Darah</SelectLabel>
+                      <SelectItem className="cursor-pointer hover:bg-white/10 duration-200 rounded-lg" value="A">A</SelectItem>
+                      <SelectItem className="cursor-pointer hover:bg-white/10 duration-200 rounded-lg" value="B">B</SelectItem>
+                      <SelectItem className="cursor-pointer hover:bg-white/10 duration-200 rounded-lg" value="AB">AB</SelectItem>
+                      <SelectItem className="cursor-pointer hover:bg-white/10 duration-200 rounded-lg" value="O">O</SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              ) : (
+                <p className="w-full rounded-xl bg-[#151515] border border-white/40 py-3 px-4 text-white">
+                  {userData.golonganDarah}
+                </p>
+              )}
+            </div>
+          </div>          
+          {!isDiagnosing && (
+            <button onClick={handleDiagnosing} className={`${isLoadTodiagnosing && 'animate-blink'} w-full bg-sky-500 hover:bg-opacity-60 duration-200 rounded-xl font-bold py-3`}>
+              {isLoadTodiagnosing ? 'Memproses Pertanyaan...' : 'Mulai Cek Diagnosa'}
+            </button>
+          )}
         </div>
+        {isDiagnosing && (                  
+          <div className="grid grid-cols-2 gap-4 w-full">
+            {informasiGejala.map((infoGejala, index) => (
+              <QuestionWrapper
+                key={index}
+                question={infoGejala.pertanyaan}
+                gejala={gejalaUser[infoGejala.gejala]}
+                setToYes={() => handleYesButton(infoGejala.gejala)}
+                setToNo={() => handleNoButton(infoGejala.gejala)}
+                setToNull={() => {
+                  handleRefreshButton(infoGejala.gejala);
+                }}
+              />
+            ))}
+            <button
+              onClick={diagnosaCheck}
+              className="rounded-xl z-20 hover:bg-blue-900 duration-150 text-xl font-extrabold text-white bg-blue-600 col-span-2 py-2 flex gap-3 items-center justify-center mt-1 shadow-lg shadow-black/60"
+            >
+              <p>CEK DIAGNOSA</p>
+              <ArrowIcon className="size-12" />
+            </button>
+          </div>
+        )}
       </div>
       <div id="marquee" className="fixed bottom-0 left-0 z-40">
-        <Marquee
-          direction="left"
-          className="bg-white text-black text-xs p-2"
-        >
+        <Marquee direction="left" className="bg-white text-black text-xs p-2">
           <p>
             Program ini hanya berfungsi sebagai alat bantu diagnosa dan telah
             dihitung memiliki akurasi sebesar 80%. Penting untuk dipahami bahwa

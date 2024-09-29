@@ -12,3 +12,14 @@
     opacity: 1;
   }
 }
+
+@keyframes slideDown {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(101%);
+    opacity: 1;
+  }
+}

@@ -434,7 +434,7 @@ const Main = () => {
       </div>
       <div
         id="diagnosa"
-        className="w-full h-full py-12 px-16 flex flex-col gap-4 bg-black bg-grid-small-white/[0.2] relative"
+        className={`w-full h-full py-12 px-16 flex flex-col gap-4 bg-black bg-grid-small-white/[0.2] relative ${!isDiagnosing ? 'pb-24' : 'pb-[3.4rem]'}`}
       >
         <div className="absolute pointer-events-none inset-0 flex items-center justify-center bg-black/40 [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>
         <h2
@@ -603,7 +603,7 @@ const Main = () => {
         <Marquee direction="left" className="bg-white text-black text-xs p-2">
           <p>
             Program ini hanya berfungsi sebagai alat bantu diagnosa dan telah
-            dihitung memiliki akurasi sebesar 80%. Penting untuk dipahami bahwa
+            dihitung memiliki akurasi sebesar 84.21%. Penting untuk dipahami bahwa
             hasil yang diberikan bukanlah jaminan kebenaran 100%, dan masih ada
             kemungkinan adanya kondisi medis lain yang tidak terdeteksi oleh
             program ini. Oleh karena itu, disarankan untuk tetap berkonsultasi

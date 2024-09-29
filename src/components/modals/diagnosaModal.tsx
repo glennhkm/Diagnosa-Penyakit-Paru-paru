@@ -19,10 +19,9 @@ interface DiagnosaModalProps {
 export const DiagnosaModal = (props: DiagnosaModalProps) => {
   const contentRef = useRef<HTMLDivElement>(null);
   const handlePrint = useReactToPrint({ contentRef });
-  const [isPrinting, setIsPrinting] = useState(false);
 
   return (
-    <div className="w-screen h-screen bg-black/80 fixed top-0 left-0 flex justify-center items-center z-50">
+    <div className="w-screen h-screen bg-black/90 fixed top-0 left-0 flex justify-center items-center z-50">
       <div className="w-[60vw] h-auto bg-black/60 border-[0.8px] border-white/40 rounded-xl grid grid-cols-2 grid-rows-2 gap-3 p-4 relative">
         <button
           onClick={() => props.setShowDiagnosa(false)}
@@ -43,13 +42,13 @@ export const DiagnosaModal = (props: DiagnosaModalProps) => {
               <p className="h-10 flex items-center font-bold">Golongan Darah</p>
             </div>
             <div className="flex flex-col gap-2 w-[62%]">
-              <p className="capitalize border-[0.8px] border-white/20 flex items-center rounded-xl py-1 px-2 w-full h-10">
+              <p className="capitalize border-[0.8px] border-white/20 flex items-center rounded-xl py-1 px-3 w-full h-10">
                 {props.dataUser.nama}
               </p>
-              <p className="capitalize border-[0.8px] border-white/20 flex items-center rounded-xl py-1 px-2 w-full h-10">
+              <p className="capitalize border-[0.8px] border-white/20 flex items-center rounded-xl py-1 px-3 w-full h-10">
                 {props.dataUser.usia} Tahun
               </p>
-              <p className="capitalize border-[0.8px] border-white/20 flex items-center rounded-xl py-1 px-2 w-full h-10">
+              <p className="capitalize border-[0.8px] border-white/20 flex items-center rounded-xl py-1 px-3 w-full h-10">
                 {props.dataUser.golonganDarah}
               </p>
             </div>
@@ -92,11 +91,11 @@ export const DiagnosaModal = (props: DiagnosaModalProps) => {
             Anda adalah prioritas utama.
           </p>
         </div>
-        <button onClick={() => handlePrint()} className="col-span-2 text-white justify-center items-center gap-3 duration-200 flex bg-blue-600 hover:bg-blue-900 saturate-200 rounded-xl font-bold py-2.5 text-xl">
+        <button onClick={() => handlePrint()} className="col-span-2 text-white justify-center items-center gap-3 duration-200 flex bg-cyan-700 hover:bg-cyan-900 saturate-200 rounded-xl font-bold py-2.5 text-xl">
           <p>Cetak Hasil</p>
           <DownloadIcon className="size-5" />
         </button>
-        <div className="hidden">
+        <div className="fixed mt-[200rem]">
           <div
             ref={contentRef}
             className="flex flex-col fixed bg-white w-full h-full py-10 px-12"
@@ -133,7 +132,7 @@ export const DiagnosaModal = (props: DiagnosaModalProps) => {
             </div>
             <div className="flex flex-col mt-8 border-b border-black/20 pb-8">
               <h4 className="font-extrabold text-3xl">Hasil Diagnosa</h4>
-              {props.diagnosa.length > 0 && (
+              {props.diagnosa.length > 0 ? (
                 <>
                   <p className="text-sm mt-3 text-justify">
                     Berdasarkan seluruh jawaban anda terhadap pertanyaan-pertanyaan
@@ -149,6 +148,8 @@ export const DiagnosaModal = (props: DiagnosaModalProps) => {
                     ))}
                   </ul>
                 </>
+              ) : (
+                <p className="text-sm mt-3">{props.diagnosaInfo}</p>
               )}
             </div>
             <p className="my-auto text-justify">

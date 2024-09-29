@@ -42,6 +42,7 @@ import {
   SelectValue,
 } from "@/components/shadcn/select";
 import { RefreshIcon } from "@/components/icons/refreshIcon";
+import { MultiStepLoader as Loader} from "@/components/aceternity/loader";
 
 const Main = () => {
   const [gejalaUser, setGejalaUser] = useState(defaultGejala);
@@ -50,6 +51,7 @@ const Main = () => {
   const [showDiagnosa, setShowDiagnosa] = useState(false);
   const [isIntro, setIsIntro] = useState(true);
   const [isSpotlight, setIsSpotlight] = useState(false);
+  const [isLoadingDiagnosa, setIsLoadingDiagnosa] = useState(false);
   const [userData, setUserData] = useState({
     nama: "",
     usia: 0,
@@ -58,6 +60,20 @@ const Main = () => {
   const [isDiagnosing, setIsDiagnosing] = useState(false);
   const [isLoadTodiagnosing, setIsLoadTodiagnosing] = useState(false);
   const diagnosaRef = useRef<HTMLDivElement | null>(null);
+  const loadingState = [
+    {
+      text: "Memproses jawaban...",
+    },
+    {
+      text: "Mendeteksi gejala...",
+    },
+    {
+      text: "Mendeteksi diagnosa penyakit...",
+    },
+    {
+      text: "Berhasil memperoleh hasil diagnosa...",
+    },
+  ]
 
   const handleYesButton = (gejala: string) => {
     setGejalaUser((prevGejalaUser) => ({
@@ -89,6 +105,11 @@ const Main = () => {
       return;
     }
 
+    setIsLoadingDiagnosa(true);
+    setTimeout(() => {
+      setShowDiagnosa(true);
+      setIsLoadingDiagnosa(false);
+    }, 4000);
     const penyakitUser = [
       {
         id: 1,
@@ -127,8 +148,7 @@ const Main = () => {
       .map(({ diagnosa, ...rest }) => rest);
     // console.log(diagnosedPenyakit);
     // console.log(gejalaUser);
-    setDiagnosa(diagnosedPenyakit);
-    setShowDiagnosa(true);
+    setDiagnosa(diagnosedPenyakit);    
 
     if (diagnosedPenyakit.length === 0) {
       setDiagnosaInfo(
@@ -139,7 +159,7 @@ const Main = () => {
     }
   };
 
-  const handleUserData = (key: string, value: string) => {    
+  const handleUserData = (key: string, value: string) => {
     setUserData((prevUserData) => ({
       ...prevUserData,
       [key]: value,
@@ -148,14 +168,21 @@ const Main = () => {
 
   const scrollToResults = () => {
     if (diagnosaRef.current) {
-      diagnosaRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      diagnosaRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
     }
   };
 
   const handleDiagnosing = () => {
     console.log(userData);
     setIsLoadTodiagnosing(true);
-    if (userData.nama === "" || userData.usia === 0 || userData.golonganDarah === "") {
+    if (
+      userData.nama === "" ||
+      userData.usia === 0 ||
+      userData.golonganDarah === ""
+    ) {
       toast.error("Silahkan isi semua data terlebih dahulu.");
       setIsLoadTodiagnosing(false);
       return;
@@ -163,8 +190,17 @@ const Main = () => {
     setTimeout(() => {
       setIsDiagnosing(true);
       setIsLoadTodiagnosing(false);
-    }, 2600);
-    
+    }, 1800);
+  };
+
+  const handleRefreshData = () => {
+    setIsDiagnosing(false);
+    setGejalaUser(defaultGejala);
+    setUserData({
+      nama: "",
+      usia: 0,
+      golonganDarah: "",
+    });
   }
 
   useEffect(() => {
@@ -187,7 +223,7 @@ const Main = () => {
   }, [isDiagnosing]);
 
   return (
-    <div className="flex flex-col w-full">
+    <div className="flex flex-col w-full relative">
       {showDiagnosa && (
         <DiagnosaModal
           diagnosa={diagnosa}
@@ -196,7 +232,7 @@ const Main = () => {
           dataUser={userData}
         />
       )}
-      
+
       {isIntro && (
         <div
           className="bg-[#151515] w-screen h-screen z-50 top-0 left-0 text-white flex flex-col justify-center items-center fixed"
@@ -235,7 +271,7 @@ const Main = () => {
             >
               <p>
                 Program ini hanya berfungsi sebagai alat bantu diagnosa dan
-                telah dihitung memiliki akurasi sebesar 80%. Penting untuk
+                telah dihitung memiliki akurasi sebesar 84.21%. Penting untuk
                 dipahami bahwa hasil yang diberikan bukanlah jaminan kebenaran
                 100%, dan masih ada kemungkinan adanya kondisi medis lain yang
                 tidak terdeteksi oleh program ini. Oleh karena itu, disarankan
@@ -250,6 +286,9 @@ const Main = () => {
       )}
       <div id="navbar">
         <Navbar />
+      </div>
+      <div className="absolute left-4 top-5 z-20">
+        <p className="text-white/20 text-sm">Hak Cipta © 2024 | Kelompok 6</p>
       </div>
       <div
         id="hero"
@@ -393,29 +432,40 @@ const Main = () => {
           </p>
         </div>
       </div>
-      <div id="diagnosa" className="w-full h-full py-12 px-16 flex flex-col gap-4 bg-black bg-grid-small-white/[0.2] relative">
-      <div className="absolute pointer-events-none inset-0 flex items-center justify-center bg-black/40 [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>                  
-        <h2 ref={diagnosaRef} className="font-bold text-8xl text-center text-white/90 mt-8 z-20 mb-8">
+      <div
+        id="diagnosa"
+        className="w-full h-full py-12 px-16 flex flex-col gap-4 bg-black bg-grid-small-white/[0.2] relative"
+      >
+        <div className="absolute pointer-events-none inset-0 flex items-center justify-center bg-black/40 [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>
+        <h2
+          ref={diagnosaRef}
+          className="font-bold text-8xl text-center text-white/90 mt-8 z-20 mb-8"
+        >
           Cek Diagnosa
         </h2>
         {isDiagnosing && (
-        <button onClick={() => setIsDiagnosing(false)} className="bg-sky-500 rounded-xl z-20 py-3 px-4 font-bold text-white flex gap-2 justify-center hover:bg-opacity-80 duration-200">
-          <RefreshIcon className="w-6 h-6"/>
-          <p>Re-input Data</p>
-        </button>
+          <button
+            onClick={handleRefreshData}
+            className="bg-sky-500 rounded-xl z-20 py-3 px-4 font-bold text-white flex gap-2 justify-center hover:bg-opacity-80 duration-200"
+          >
+            <RefreshIcon className="w-6 h-6" />
+            <p>Re-input Data</p>
+          </button>
         )}
         <div className="flex flex-col gap-4 w-full rounded-xl bg-[#151515]/80 z-20 p-6 text-white border border-white/20">
           <div className="flex gap-4">
             <div className="flex flex-col w-full gap-1">
-              <label htmlFor="nama" className="text-white pl-1 font-bold">Nama</label>
+              <label htmlFor="nama" className="text-white pl-1 font-bold">
+                Nama
+              </label>
               {!isDiagnosing ? (
                 <input
-                type="text"
-                id="nama"
-                name="nama"
-                className="w-full rounded-xl bg-transparent border border-white/40 py-3 px-4 placeholder:text-white/40 text-white focus:outline-none"
-                placeholder="Masukkan nama anda"
-                onChange={(e) => handleUserData('nama', e.target.value)}
+                  type="text"
+                  id="nama"
+                  name="nama"
+                  className="w-full rounded-xl bg-transparent border border-white/40 py-3 px-4 placeholder:text-white/40 text-white focus:outline-none"
+                  placeholder="Masukkan nama anda"
+                  onChange={(e) => handleUserData("nama", e.target.value)}
                 />
               ) : (
                 <p className="w-full rounded-xl bg-[#151515] border border-white/40 py-3 px-4 text-white">
@@ -424,39 +474,83 @@ const Main = () => {
               )}
             </div>
             <div className="flex flex-col w-full gap-1 relative">
-              <label htmlFor="usia" className="text-white pl-1 font-bold">Usia</label>
+              <label htmlFor="usia" className="text-white pl-1 font-bold">
+                Usia
+              </label>
               {!isDiagnosing ? (
-                <div className="relative w-full ">
+                <div className="relative w-full">
                   <input
-                  type="number"
-                  id="usia"
-                  name="usia"
-                  className="w-full rounded-xl bg-transparent border border-white/40 py-3 px-4 placeholder:text-white/40 text-white focus:outline-none"
-                  placeholder="Masukkan usia anda"
-                  onChange={(e) => handleUserData('usia', e.target.value)}
+                    type="number"
+                    id="usia"
+                    name="usia"
+                    className="w-full rounded-xl bg-transparent border border-white/40 py-3 px-4 placeholder:text-white/40 text-white focus:outline-none"
+                    placeholder="Masukkan usia anda"
+                    onChange={(e) => {
+                      const value = parseInt(e.target.value, 10);
+                      if (value > 0) {
+                        handleUserData("usia", value.toString());
+                      } else {
+                        e.target.value = "";
+                      }
+                    }}
+                    min="1"
                   />
-                  <p className="absolute right-12 text-white top-1/2 -translate-y-1/2 z-20">Tahun</p>                  
-                </div>              
+                  <p className="absolute right-12 text-white top-1/2 -translate-y-1/2 z-20">
+                    Tahun
+                  </p>
+                </div>
               ) : (
                 <p className="w-full rounded-xl bg-[#151515] border border-white/40 py-3 px-4 text-white">
-                  {userData.usia}
+                  {userData.usia} Tahun
                 </p>
               )}
             </div>
             <div className="flex flex-col w-full gap-1 relative">
-              <label  className="text-white pl-1 font-bold">Golongan Darah</label>
+              <label className="text-white pl-1 font-bold">
+                Golongan Darah
+              </label>
               {!isDiagnosing ? (
-                <Select onValueChange={(value) => handleUserData('golonganDarah', value)}>            
-                  <SelectTrigger className={`bg-transparent border border-white/40 ${userData.golonganDarah ? 'text-white' : 'text-white/40'}`}>
+                <Select
+                  onValueChange={(value) =>
+                    handleUserData("golonganDarah", value)
+                  }
+                >
+                  <SelectTrigger
+                    className={`bg-transparent border border-white/40 ${
+                      userData.golonganDarah ? "text-white" : "text-white/40"
+                    }`}
+                  >
                     <SelectValue placeholder="Pilih golongan darah anda" />
                   </SelectTrigger>
                   <SelectContent className="text-white bg-[#151515] border border-white/40">
                     <SelectGroup>
-                      <SelectLabel className="text-white text-base">Golongan Darah</SelectLabel>
-                      <SelectItem className="cursor-pointer hover:bg-white/10 duration-200 rounded-lg" value="A">A</SelectItem>
-                      <SelectItem className="cursor-pointer hover:bg-white/10 duration-200 rounded-lg" value="B">B</SelectItem>
-                      <SelectItem className="cursor-pointer hover:bg-white/10 duration-200 rounded-lg" value="AB">AB</SelectItem>
-                      <SelectItem className="cursor-pointer hover:bg-white/10 duration-200 rounded-lg" value="O">O</SelectItem>
+                      <SelectLabel className="text-white text-base">
+                        Golongan Darah
+                      </SelectLabel>
+                      <SelectItem
+                        className="cursor-pointer hover:bg-white/10 duration-200 rounded-lg"
+                        value="A"
+                      >
+                        A
+                      </SelectItem>
+                      <SelectItem
+                        className="cursor-pointer hover:bg-white/10 duration-200 rounded-lg"
+                        value="B"
+                      >
+                        B
+                      </SelectItem>
+                      <SelectItem
+                        className="cursor-pointer hover:bg-white/10 duration-200 rounded-lg"
+                        value="AB"
+                      >
+                        AB
+                      </SelectItem>
+                      <SelectItem
+                        className="cursor-pointer hover:bg-white/10 duration-200 rounded-lg"
+                        value="O"
+                      >
+                        O
+                      </SelectItem>
                     </SelectGroup>
                   </SelectContent>
                 </Select>
@@ -466,14 +560,21 @@ const Main = () => {
                 </p>
               )}
             </div>
-          </div>          
+          </div>
           {!isDiagnosing && (
-            <button onClick={handleDiagnosing} className={`${isLoadTodiagnosing && 'animate-blink'} w-full bg-sky-500 hover:bg-opacity-60 duration-200 rounded-xl font-bold py-3`}>
-              {isLoadTodiagnosing ? 'Memproses Pertanyaan...' : 'Mulai Cek Diagnosa'}
+            <button
+              onClick={handleDiagnosing}
+              className={`${
+                isLoadTodiagnosing && "animate-blink"
+              } w-full bg-sky-500 hover:bg-opacity-60 duration-200 rounded-xl font-bold py-3`}
+            >
+              {isLoadTodiagnosing
+                ? "Memproses Pertanyaan..."
+                : "Mulai Cek Diagnosa"}
             </button>
           )}
         </div>
-        {isDiagnosing && (                  
+        {isDiagnosing && (
           <div className="grid grid-cols-2 gap-4 w-full">
             {informasiGejala.map((infoGejala, index) => (
               <QuestionWrapper
@@ -494,6 +595,7 @@ const Main = () => {
               <p>CEK DIAGNOSA</p>
               <ArrowIcon className="size-12" />
             </button>
+            <Loader loadingStates={loadingState} duration={1000} loading={isLoadingDiagnosa}/>
           </div>
         )}
       </div>

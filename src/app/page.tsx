@@ -230,6 +230,7 @@ const Main = () => {
           diagnosaInfo={diagnosaInfo}
           setShowDiagnosa={setShowDiagnosa}
           dataUser={userData}
+          gejalaUser={gejalaUser}
         />
       )}
 

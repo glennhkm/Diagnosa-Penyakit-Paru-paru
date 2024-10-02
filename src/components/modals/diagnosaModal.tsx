@@ -136,7 +136,7 @@ export const DiagnosaModal = (props: DiagnosaModalProps) => {
                 </div>
               </div>
             </div>
-            <div className="flex flex-col mt-8 border-b border-black/20 pb-8">
+            {/* <div className="flex flex-col mt-8 border-b border-black/20 pb-8">
               <h4 className="font-extrabold text-3xl">Gejala Anda</h4>
               <ul className="mt-4 flex flex-col gap-2">
                 {Object.entries(props.gejalaUser)
@@ -148,7 +148,7 @@ export const DiagnosaModal = (props: DiagnosaModalProps) => {
                     </li>
                   ))}
               </ul>
-            </div>
+            </div> */}
             <div className="flex flex-col mt-8 border-b border-black/20 pb-8">
               <h4 className="font-extrabold text-3xl">Hasil Diagnosa</h4>
               {props.diagnosa.length > 0 ? (

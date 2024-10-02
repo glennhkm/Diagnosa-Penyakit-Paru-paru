@@ -8,12 +8,15 @@ import Lottie from "lottie-react";
 import { useReactToPrint } from "react-to-print";
 import { DownloadIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
+import { DefaultGejalaTypes } from "@/types/defaultGejalaTypes";
+import { defaultGejala } from "@/data/defaultGejala";
 
 interface DiagnosaModalProps {
   setShowDiagnosa: React.Dispatch<React.SetStateAction<boolean>>;
   diagnosaInfo: string;
   diagnosa: PenyakitDanSolusi[];
   dataUser: any;
+  gejalaUser: DefaultGejalaTypes;
 }
 
 export const DiagnosaModal = (props: DiagnosaModalProps) => {
@@ -91,7 +94,10 @@ export const DiagnosaModal = (props: DiagnosaModalProps) => {
             Anda adalah prioritas utama.
           </p>
         </div>
-        <button onClick={() => handlePrint()} className="col-span-2 text-white justify-center items-center gap-3 duration-200 flex bg-cyan-700 hover:bg-cyan-900 saturate-200 rounded-xl font-bold py-2.5 text-xl">
+        <button
+          onClick={() => handlePrint()}
+          className="col-span-2 text-white justify-center items-center gap-3 duration-200 flex bg-cyan-700 hover:bg-cyan-900 saturate-200 rounded-xl font-bold py-2.5 text-xl"
+        >
           <p>Cetak Hasil</p>
           <DownloadIcon className="size-5" />
         </button>
@@ -110,8 +116,8 @@ export const DiagnosaModal = (props: DiagnosaModalProps) => {
               <div className="flex flex-col gap-1">
                 <h2 className="text-7xl font-extrabold">PulmoHealth</h2>
                 <p className="pl-2 text-xs">
-                  Kecerdasan Artifisial berbasis aturan mengenai diagnosa penyakit
-                  paru-paru
+                  Kecerdasan Artifisial berbasis aturan mengenai diagnosa
+                  penyakit paru-paru
                 </p>
               </div>
             </div>
@@ -131,14 +137,27 @@ export const DiagnosaModal = (props: DiagnosaModalProps) => {
               </div>
             </div>
             <div className="flex flex-col mt-8 border-b border-black/20 pb-8">
+              <h4 className="font-extrabold text-3xl">Gejala Anda</h4>
+              <ul className="mt-4 flex flex-col gap-2">
+                {Object.entries(props.gejalaUser)
+                  .filter(([_, value]) => value)
+                  .map(([key], index) => (
+                    <li key={index} className="font-bold text-lg">
+                      {index + 1}.{" "}
+                      {defaultGejala[key as keyof DefaultGejalaTypes]}
+                    </li>
+                  ))}
+              </ul>
+            </div>
+            <div className="flex flex-col mt-8 border-b border-black/20 pb-8">
               <h4 className="font-extrabold text-3xl">Hasil Diagnosa</h4>
               {props.diagnosa.length > 0 ? (
                 <>
                   <p className="text-sm mt-3 text-justify">
-                    Berdasarkan seluruh jawaban anda terhadap pertanyaan-pertanyaan
-                    yang diberikan, sistem platform PulmoHealth dapat memberikan
-                    informasi <b>KEMUNGKINAN</b> bahwa anda mengalami penyakit
-                    paru-paru berikut:
+                    Berdasarkan seluruh jawaban anda terhadap
+                    pertanyaan-pertanyaan yang diberikan, sistem platform
+                    PulmoHealth dapat memberikan informasi <b>KEMUNGKINAN</b>{" "}
+                    bahwa anda mengalami penyakit paru-paru berikut:
                   </p>
                   <ul className="mt-4 flex flex-col gap-2">
                     {props.diagnosa.map((penyakit, index) => (
@@ -156,14 +175,16 @@ export const DiagnosaModal = (props: DiagnosaModalProps) => {
               Hasil diagnosa ini memiliki tingkat akurasi 84.21% berdasarkan
               penelitian, yang berarti tidak 100% akurat. Layanan ini bersifat
               edukatif, bukan solutif, dan tidak menggantikan konsultasi medis
-              profesional. Kami sangat menyarankan Anda untuk berkonsultasi dengan
-              dokter spesialis paru-paru untuk evaluasi lebih lanjut dan
-              penanganan yang tepat. Gunakan hasil ini sebagai langkah awal untuk
-              lebih memperhatikan kesehatan paru-paru Anda, namun selalu andalkan
-              nasihat dokter untuk keputusan kesehatan yang penting. Kesehatan
-              Anda adalah prioritas utama.
+              profesional. Kami sangat menyarankan Anda untuk berkonsultasi
+              dengan dokter spesialis paru-paru untuk evaluasi lebih lanjut dan
+              penanganan yang tepat. Gunakan hasil ini sebagai langkah awal
+              untuk lebih memperhatikan kesehatan paru-paru Anda, namun selalu
+              andalkan nasihat dokter untuk keputusan kesehatan yang penting.
+              Kesehatan Anda adalah prioritas utama.
             </p>
-            <p className="font-bold">Terima kasih telah memakai platform kami.</p>
+            <p className="font-bold">
+              Terima kasih telah memakai platform kami.
+            </p>
             <p className="">Hak Cipta © 2024 | Kelompok 6</p>
           </div>
         </div>

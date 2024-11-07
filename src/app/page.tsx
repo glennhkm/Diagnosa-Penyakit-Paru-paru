@@ -244,7 +244,7 @@ const Main = () => {
         >
           <TextGenerateEffect
             className="text-[10rem] text-white font-extrabold"
-            words="Kelompok 7"
+            words="Kelompok 6"
           />
           <div className="flex gap-2 items-center -mt-5">
             <Image
